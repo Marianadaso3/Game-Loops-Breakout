@@ -22,9 +22,9 @@ En la pantalla, coloquen algunos rectángulos para representar los “bloques”
 Si se eliminan todos los bloques, cierren el juego y muestren en la terminal un mensaje que diga algo como “You Win!”
 
 
-Link del video en ejecución: 
+Link del video en ejecución implementando ECS: 
 
-https://www.youtube.com/watch?v=yeeu2qO0hVA
+https://www.youtube.com/watch?v=5otJyHOcGmc
 
 
 Comandos:
