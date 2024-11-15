@@ -142,6 +142,9 @@ public:
     int currentFrame;
     int frameWidth, frameHeight;
     Uint32 lastFrameTime;
+    Uint32 lastCollisionTime; // Variable para controlar el tiempo de la última colisión
+    const Uint32 collisionCooldown = 500; // Tiempo de "enfriamiento" en milisegundos (500 ms = 0.5 segundos)
+   // bool checkCollisionWithCooldown(const SDL_Rect& targetRect);
 
     Character(SDL_Renderer* renderer)
         : speed(5), x(100), y(100), currentFrame(0), lastFrameTime(0) {
@@ -199,6 +202,13 @@ public:
     SDL_Rect getCollider() {
         return { x + destRect.w / 2 - 60, y + destRect.h / 2 - 40, 120, 80 };
     }
+
+    bool checkCollisionWithCooldown(const SDL_Rect& targetRect) {
+    SDL_Rect collider = getCollider(); // Guardamos el resultado en una variable temporal
+    return SDL_HasIntersection(&collider, &targetRect); // Pasamos la dirección de la variable temporal
+}
+
+
 
     ~Character() {
         SDL_DestroyTexture(texture);
@@ -321,6 +331,9 @@ int main(int argc, char* argv[]) {
         float dT = (currentFrameTime - lastFrameTime) / 1000.0f;
         lastFrameTime = currentFrameTime;
 
+
+        
+
         while (SDL_PollEvent(&e) != 0) {
             if (e.type == SDL_QUIT) {
                 quit = true;
@@ -384,6 +397,7 @@ int main(int argc, char* argv[]) {
          // Calcular el tiempo transcurrido
         Uint32 elapsedTime = (SDL_GetTicks() - startTime) / 1000; // En segundos
         std::string timerText = "Tiempo: " + std::to_string(elapsedTime) + "s";
+        std::cout << "Tiempo transcurrido: " << elapsedTime << " segundos." << std::endl;
 
         // Renderizar el texto del temporizador
         SDL_Color white = {255, 255, 255, 255};
